@@ -1,0 +1,26 @@
+fruit_id,day,temperature,ripeness_stage,image_path,notes
+M001,1,28,Unripe,mango/images/M001_day1.jpg,Harvester day 1 initial observation
+M001,2,28,Unripe,mango/images/M001_day2.jpg,Slight softening at stem
+M001,3,29,Semi-Ripe,mango/images/M001_day3.jpg,Yellowing begins at tip
+M001,4,29,Semi-Ripe,mango/images/M001_day4.jpg,Yellow coverage ~40%
+M001,5,30,Ripe,mango/images/M001_day5.jpg,Aromatic and yield to thumb pressure
+M001,6,30,Overripe,mango/images/M001_day6.jpg,Dark brown spots emerging
+M002,1,25,Unripe,mango/images/M002_day1.jpg,Cooler storage experiment
+M002,2,25,Unripe,mango/images/M002_day2.jpg,Firm texture
+M002,3,25,Unripe,mango/images/M002_day3.jpg,Minimal yellowing
+M002,4,26,Semi-Ripe,mango/images/M002_day4.jpg,Transitioning to semi-ripe
+M002,5,26,Semi-Ripe,mango/images/M002_day5.jpg,Yellow coverage ~50%
+M002,6,26,Ripe,mango/images/M002_day6.jpg,Optimal sweetness
+M003,1,32,Unripe,mango/images/M003_day1.jpg,High temperature storage
+M003,2,32,Semi-Ripe,mango/images/M003_day2.jpg,Accelerated ripening
+M003,3,32,Ripe,mango/images/M003_day3.jpg,Fully ripe by day 3
+M003,4,33,Overripe,mango/images/M003_day4.jpg,Soft and overripe
+M004,1,28,Unripe,mango/images/M004_day1.jpg,Alphonso variant sample A
+M004,2,28,Unripe,mango/images/M004_day2.jpg,Green firm skin
+M004,3,28,Semi-Ripe,mango/images/M004_day3.jpg,Mild aroma
+M004,4,29,Ripe,mango/images/M004_day4.jpg,Golden hue
+M004,5,29,Ripe,mango/images/M004_day5.jpg,Peak ripeness
+M005,1,30,Unripe,mango/images/M005_day1.jpg,Kesar variant sample B
+M005,2,30,Semi-Ripe,mango/images/M005_day2.jpg,Quick yellow onset
+M005,3,30,Ripe,mango/images/M005_day3.jpg,Rich aroma
+M005,4,31,Overripe,mango/images/M005_day4.jpg,Brown spotting

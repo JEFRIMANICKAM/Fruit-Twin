@@ -1,0 +1,21 @@
+fruit_id,day,temperature,variety_id,variety_name,tamil_name,ripeness_stage,R,G,B,W_grams,C_pF,TSS_brix,TA_pct,notes
+B001,1,28,sevazhai,Red Banana (Sevazhai),செவ்வாழை,Unripe,45.2,38.1,28.4,185.0,1.25,4.5,0.65,Harvested firm greenish-red peel
+B001,2,28,sevazhai,Red Banana (Sevazhai),செவ்வாழை,Unripe,52.4,36.5,27.1,183.2,1.38,6.8,0.58,Bronze-red transition begins
+B001,3,28,sevazhai,Red Banana (Sevazhai),செவ்வாழை,Semi-Ripe,64.8,32.2,25.4,180.5,1.55,11.2,0.45,Distinct crimson-red peel development
+B001,4,28,sevazhai,Red Banana (Sevazhai),செவ்வாழை,Semi-Ripe,69.5,29.8,24.2,178.1,1.72,14.5,0.38,Aromatic softening at tip
+B001,5,28,sevazhai,Red Banana (Sevazhai),செவ்வாழை,Ripe,76.2,25.4,22.1,175.4,1.95,19.5,0.30,Peak flavor deep maroon skin
+B001,6,28,sevazhai,Red Banana (Sevazhai),செவ்வாழை,Ripe,77.5,24.1,21.5,173.2,2.05,20.8,0.25,Optimal sweetness and soft flesh
+B001,7,28,sevazhai,Red Banana (Sevazhai),செவ்வாழை,Overripe,62.1,19.5,18.2,168.0,2.35,22.8,0.20,Dark maroon-brown senescence spots
+B002,1,28,poovan,Poovan,பூவன் வாழைப்பழம்,Unripe,38.5,68.2,18.4,120.0,1.15,4.2,0.72,Firm green peel harvest
+B002,2,28,poovan,Poovan,பூவன் வாழைப்பழம்,Unripe,44.2,64.1,17.8,118.5,1.28,6.5,0.64,Slight yellow break at ribs
+B002,3,28,poovan,Poovan,பூவன் வாழைப்பழம்,Semi-Ripe,58.4,59.2,16.5,116.8,1.45,11.8,0.48,50% golden-yellow color break
+B002,4,28,poovan,Poovan,பூவன் வாழைப்பழம்,Semi-Ripe,68.2,54.5,15.2,114.5,1.60,15.2,0.40,Bright yellowing
+B002,5,28,poovan,Poovan,பூவன் வாழைப்பழம்,Ripe,75.4,69.8,14.8,112.0,1.82,21.0,0.28,Golden ripe aromatic small fingers
+B002,6,28,poovan,Poovan,பூவன் வாழைப்பழம்,Overripe,61.2,48.5,16.2,108.5,2.15,23.5,0.18,Sugar speckling on peel
+B003,1,28,nendran,Nendran,நேந்திரன் வாழைப்பழம்,Unripe,36.2,65.4,15.2,210.0,1.20,5.1,0.68,Thick green plantain peel
+B003,3,28,nendran,Nendran,நேந்திரன் வாழைப்பழம்,Semi-Ripe,62.5,55.8,14.2,204.0,1.52,12.4,0.46,Orange-yellow tint
+B003,5,28,nendran,Nendran,நேந்திரன் வாழைப்பழம்,Ripe,78.2,58.4,13.5,198.5,1.88,19.8,0.32,Deep yellow-orange firm ripe plantain
+B004,1,28,rasthali,Rasthali,ரஸ்தாளி வாழைப்பழம்,Unripe,39.8,69.5,19.2,135.0,1.12,4.8,0.70,Thin green peel
+B004,5,28,rasthali,Rasthali,ரஸ்தாளி வாழைப்பழம்,Ripe,78.5,74.2,22.1,128.0,1.85,22.4,0.26,Creamy yellow thin peel aromatic
+B005,1,28,grand_naine,Grand Naine (G9),கிராண்ட் நைன்,Unripe,32.4,72.1,16.8,165.0,1.18,4.0,0.75,Commercial green Cavendish
+B005,5,28,grand_naine,Grand Naine (G9),கிராண்ட் நைன்,Ripe,71.5,65.2,17.4,158.0,1.78,18.5,0.34,Standard commercial yellow ripe

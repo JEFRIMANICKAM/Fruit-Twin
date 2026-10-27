@@ -1,0 +1,496 @@
+<USER_REQUEST>
+# COMPLETE ANTIGRAVITY DEVELOPMENT PROMPT
+# PROJECT: FRUIT TWIN — MULTI-FRUIT IDENTIFICATION AND GAN-BASED RIPENING SIMULATION
+
+## 1. PROJECT OBJECTIVE
+
+I have already developed a website called Fruit Twin. I want to upgrade the existing project into a complete AI-powered multi-fruit identification, maturity classification, and GAN-based future fruit appearance simulation system.
+
+The project must combine two datasets:
+
+DATASET 1 — FRUITS-360
+https://www.kaggle.com/datasets/moltean/fruits
+
+DATASET 2 — RAWRIPE
+https://github.com/ai-agriculture-circuits-and-systems/RawRipe
+
+The system must use machine learning/deep learning for fruit identification and ripeness classification, a Generative Adversarial Network (GAN) for generating simulated future fruit appearances, and a manual room-temperature input for supported ripening-time estimation.
+
+IMPORTANT:
+- I have already built the Fruit Twin website.
+- First inspect my entire existing codebase.
+- Preserve the existing design, features, project structure, and working functionality wherever possible.
+- Do not rebuild the project from scratch.
+- Do not remove my existing GAN implementation unless a technically justified replacement is necessary.
+- Do not create only a frontend prototype or static demonstration.
+- Implement the actual backend, dataset loading, model training, inference, and website integration.
+- Do not claim that a model is trained or a feature works unless it has actually been implemented and tested.
+
+The final application should be a functional multi-fruit Fruit Twin platform, with capabilities determined by the datasets and models actually available.
+
+---
+
+## 2. FIRST STEP — INSPECT THE EXISTING PROJECT
+
+Before changing any files, inspect:
+
+- Existing frontend pages and styling.
+- Existing backend framework and API routes.
+- Existing ML/DL model files.
+- Existing GAN architecture and training scripts.
+- Existing mango dataset integration, if present.
+- Existing image upload functionality.
+- Existing room-temperature input.
+- Existing prediction results and image-generation features.
+- Current Python environment and dependencies.
+- Existing project folders and model storage locations.
+
+Identify which components can be reused and which need to be implemented or corrected.
+
+Create a concise implementation plan, then make the changes directly in the existing project.
+
+Keep the current website's branding and layout. Improve the UI only where required to support the new multi-fruit functionality.
+
+---
+
+## 3. DATASET INTEGRATION
+
+### A. Fruits-360 dataset
+
+Source:
+https://www.kaggle.com/datasets/moltean/fruits
+
+Purpose:
+Multi-class fruit identification.
+
+Requirements:
+
+1. Support the fruit classes and varieties present in the downloaded dataset version.
+2. Automatically discover the available classes from the dataset directory.
+3. Use the dataset's provided training and testing splits when available.
+4. Inspect the actual directory structure before implementing the loader.
+5. Handle the dataset version's actual folder names instead of assuming a fixed structure.
+6. Preprocess images consistently with the selected model.
+7. Resize images to the required model input dimensions.
+8. Save the trained model and class-label mapping.
+9. Display the predicted fruit and confidence score.
+10. Ensure the model can be loaded by the existing website without retraining at every startup.
+
+Use a CNN or a suitable transfer-learning model such as MobileNetV2.
+
+Start with an image size appropriate for the selected architecture, such as 224 × 224, and adjust it if required by the existing implementation.
+
+Do not hardcode the application to support only mango.
+
+### B. RawRipe dataset
+
+Source:
+https://github.com/ai-agriculture-circuits-and-systems/RawRipe
+
+Purpose:
+Raw-versus-ripe maturity classification.
+
+The dataset covers these 10 fruit types:
+
+- Apple
+- Banana
+- Coconut
+- Guava
+- Litchi
+- Mango
+- Orange
+- Papaya
+- Pomegranate
+- Strawberry
+
+Verify the actual downloadable dataset, labels, directory structure, and train/test split before implementing the pipeline. Do not assume that every image or file is directly downloadable from GitHub.
+
+Requirements:
+
+1. Obtain the dataset using its documented download instructions.
+2. Keep the original data intact.
+3. Inspect the labels and metadata.
+4. Create a reliable image loader for the actual dataset structure.
+5. Train a maturity classifier using the available raw and ripe labels.
+6. Save the model and its class-label mapping.
+7. Evaluate it using held-out test data.
+8. Integrate its predictions into the existing Fruit Twin backend.
+
+Do not invent missing labels or automatically label every Fruits-360 image as raw or ripe.
+
+### C. Combine both datasets correctly
+
+Do not blindly merge all images into a single folder or assume both datasets use identical labels.
+
+Implement a coordinated multi-model architecture:
+
+- Fruits-360 model: identifies the fruit and variety.
+- RawRipe model: classifies maturity as raw or ripe for supported fruit types.
+- GAN model: generates a simulated target-stage appearance for supported fruit types.
+- Optional regression model: estimates ripening time only when suitable time-labelled training data is available.
+
+Keep the models modular so each can be trained, evaluated, replaced, and expanded independently.
+
+Map fruit names between datasets carefully. Normalize differences in capitalization, spelling, and naming conventions, but do not merge different varieties into one class unless the application explicitly requires it.
+
+When a fruit is recognized but no compatible maturity model is available, show:
+
+"Fruit identified successfully. Ripeness prediction is not yet available for this fruit."
+
+The fruit-identification result must remain available even if maturity classification is unsupported.
+
+---
+
+## 4. MULTI-FRUIT IDENTIFICATION MODEL
+
+Implement a working multi-class image classification pipeline.
+
+Requirements:
+
+- Use TensorFlow/Keras or PyTorch, depending on the existing project.
+- Prefer reusing the existing ML framework and compatible models.
+- Use MobileNetV2 transfer learning or a suitable CNN.
+- Apply consistent image preprocessing during training and prediction.
+- Use data augmentation where appropriate.
+- Save class names in the exact order corresponding to model output indices.
+- Implement a reproducible training script.
+- Save the trained model to a configurable location.
+- Load the model once and reuse it for inference.
+- Add confidence thresholds and an uncertain-prediction response.
+- Avoid falsely claiming that every fruit image will be recognized correctly.
+
+The prediction result must contain:
+
+- Predicted fruit name.
+- Predicted variety when supported.
+- Confidence score.
+- Whether the prediction is considered reliable.
+- Optional top-three candidate predictions.
+
+Use a suitable evaluation process and report actual results on the held-out test set.
+
+---
+
+## 5. MATURITY CLASSIFICATION MODEL
+
+Implement a separate maturity classifier using RawRipe.
+
+Supported initial maturity labels:
+
+- Raw
+- Ripe
+
+Do not automatically add overripe as a supported class because the dataset may not provide that label.
+
+Requirements:
+
+1. Train a CNN or suitable transfer-learning model.
+2. Evaluate performance on held-out test data.
+3. Return the predicted maturity label and confidence.
+4. Integrate the classifier after fruit identification.
+5. Use the maturity model only for supported fruit types.
+6. Display an unsupported status for other fruit types.
+7. Handle low-confidence results without presenting them as certain predictions.
+
+Where feasible, investigate whether a shared model with a fruit-type input improves performance, but only adopt it if the dataset labels and evaluation justify that choice.
+
+Avoid training and testing on duplicate images or images from the same source group if that would cause data leakage.
+
+---
+
+## 6. GAN-BASED FRUIT TWIN IMAGE GENERATION
+
+This is a core feature of the project.
+
+Preserve my existing GAN if it can be adapted appropriately.
+
+If the existing model needs improvement, implement a suitable conditional GAN (cGAN) or conditional image-to-image translation model.
+
+The objective is to generate a plausible image of the same fruit at a selected target maturity stage.
+
+Requirements:
+
+- Support conditioning on fruit type.
+- Support source and target maturity stages where the architecture and training data permit.
+- Generate images for fruit-stage combinations that have sufficient suitable training data.
+- Preserve fruit identity, approximate shape, and visual characteristics as much as the trained model allows.
+- Display the original uploaded image beside the generated image.
+- Allow the user to select an available target maturity stage.
+- Clearly label generated images as AI-generated simulations.
+- Do not present generated images as guaranteed predictions of the actual fruit's future appearance.
+
+### GAN dataset requirements
+
+Inspect whether RawRipe contains suitable images for the required source and target stages.
+
+The RawRipe raw/ripe labels can be used to investigate a two-stage conditional generation model, but they do not automatically provide paired before-and-after images of the same physical fruit.
+
+Choose an appropriate GAN architecture based on the available data.
+
+If the dataset is insufficient for reliable image-to-image translation:
+
+1. Do not fabricate paired images.
+2. Do not use ordinary filters and describe them as GAN output.
+3. Do not display random generated images as personalized predictions.
+4. Implement and test a genuine GAN training pipeline.
+5. Limit generation to supported fruit-stage combinations.
+6. Explain which additional images or labels are needed to expand coverage.
+
+Start with mango if my existing mango dataset and GAN implementation are suitable. Then expand to other fruit types as suitable training data becomes available.
+
+Save trained generator checkpoints and make sure the website uses the trained generator during inference.
+
+---
+
+## 7. ROOM-TEMPERATURE INPUT
+
+Preserve the existing room-temperature input field.
+
+Requirements:
+
+- Allow users to enter room temperature manually in degrees Celsius.
+- Validate numeric input and reasonable configured bounds.
+- Display the entered temperature in the results panel.
+- Pass temperature to the ripening-time prediction model only if that model has actually been trained to use it.
+
+Temperature must not automatically be treated as sufficient evidence to predict the exact remaining ripening time.
+
+---
+
+## 8. RIPENING-TIME ESTIMATION
+
+Implement this feature only if suitable training data can be obtained.
+
+Required target:
+Estimate the approximate time remaining until the selected fruit reaches a specified maturity stage.
+
+Potential features:
+
+- Fruit type.
+- Current maturity stage.
+- Room temperature.
+- Relevant additional environmental or storage variables when available.
+- Ground-truth time until the target stage.
+
+A Random Forest Regressor, Gradient Boosting model, or another appropriate regression method may be used.
+
+Requirements:
+
+1. Identify a dataset containing real ripening-time labels.
+2. Verify the quality and relevance of those labels.
+3. Train a regression model using appropriate inputs.
+4. Evaluate the model on held-out observations.
+5. Report MAE and other appropriate metrics.
+6. Avoid data leakage between train and test samples.
+7. Report the conditions under which predictions were evaluated.
+8. Display estimates only for supported fruit types and conditions.
+
+If adequate time-labelled data is unavailable, show:
+
+"Ripening-time estimation is not yet supported because validated training data is unavailable."
+
+Do not fabricate a predicted number of days.
+
+---
+
+## 9. WEBSITE USER INTERFACE
+
+Preserve the existing Fruit Twin website design and branding.
+
+Upgrade the existing upload and results interface to support multiple fruits.
+
+The main page should include:
+
+### Image upload section
+
+- Upload fruit image.
+- Display an image preview.
+- Provide a clear prediction button.
+- Validate image format and file size.
+- Show useful errors when the image cannot be processed.
+
+### Fruit identification results
+
+- Uploaded image.
+- Predicted fruit name.
+- Variety, if available.
+- Confidence score.
+- Reliability status.
+
+### Maturity results
+
+- Raw or ripe classification, when supported.
+- Confidence score.
+- Unsupported status when maturity prediction is unavailable.
+
+### Room-temperature section
+
+- Temperature input in Celsius.
+- Clear input validation.
+- Explanation that temperature is one factor affecting ripening.
+
+### Fruit Twin GAN section
+
+- Original uploaded image.
+- Target-stage selector showing only supported options.
+- Generate Fruit Twin button.
+- AI-generated target-stage image.
+- Loading indicator during generation.
+- Error handling if generation fails.
+- Clear AI-simulation disclaimer.
+
+### Ripening-time section
+
+- Estimated remaining time only when a validated model supports the fruit and conditions.
+- Otherwise display an honest availability message.
+
+### Design requirements
+
+- Maintain the existing colors and visual identity.
+- Use responsive layouts for desktop and mobile.
+- Make results easy to understand.
+- Keep buttons and status messages accessible.
+- Do not redesign the entire application unnecessarily.
+- Do not show hardcoded predictions as real model results.
+
+---
+
+## 10. BACKEND AND API INTEGRATION
+
+Use the existing backend framework. If the application uses Flask, retain Flask.
+
+Reuse existing routes when possible.
+
+If new endpoints are needed, implement equivalents of:
+
+POST /predict-fruit
+POST /predict-maturity
+POST /generate-twin
+POST /predict-ripening-time
+
+The exact endpoint names may be adjusted to fit the existing architecture.
+
+Requirements:
+
+- Validate uploaded images.
+- Handle missing or malformed inputs.
+- Keep model class mappings consistent.
+- Load models efficiently.
+- Return structured JSON responses.
+- Include meaningful error messages.
+- Prevent unsupported features from returning fabricated results.
+- Keep large model files outside version control where appropriate.
+- Do not expose internal file paths or sensitive server details in API errors.
+
+The frontend must call the actual backend and display its real results.
+
+---
+
+## 11. TRAINING AND PROJECT STRUCTURE
+
+Keep the current project structure unless there is a strong technical reason to change it.
+
+Add or update the required training scripts, model files, and configuration.
+
+Possible components, adapted to the existing project:
+
+- Fruit-identification training script.
+- Maturity-classification training script.
+- GAN training script.
+- Ripening-time regression training script, if supported.
+- Dataset configuration.
+- Model-loading module.
+- Image preprocessing module.
+- Evaluation scripts.
+- Requirements file.
+- README documentation.
+
+Requirements:
+
+1. Use configurable dataset paths.
+2. Keep datasets and large checkpoints out of source control where appropriate.
+3. Add clear instructions for obtaining both datasets.
+4. Provide repeatable model-training commands.
+5. Save trained models and label mappings.
+6. Do not retrain models during every website request.
+7. Check model compatibility with the installed dependencies.
+8. Keep the application usable if an optional model is not yet available.
+
+If a dataset cannot be accessed automatically, provide a clear manual download and extraction procedure instead of silently substituting dummy data.
+
+---
+
+## 12. TESTING AND EVALUATION
+
+After implementation, test the actual integrated application.
+
+Test cases:
+
+1. Upload a mango image.
+2. Upload an apple image.
+3. Upload a banana image.
+4. Upload another supported Fruits-360 class.
+5. Test a RawRipe-supported fruit with a maturity label.
+6. Test a fruit without a trained maturity model.
+7. Upload an invalid file.
+8. Test a low-confidence prediction.
+9. Generate a GAN image for a supported fruit-stage combination.
+10. Test a target stage unsupported by the GAN.
+11. Enter a valid room temperature.
+12. Test invalid temperature input.
+13. Check that existing website functionality still works.
+
+Provide actual model evaluation results, including appropriate classification metrics such as accuracy, precision, recall, and F1-score.
+
+For regression, report MAE and other suitable metrics if a valid regression model is implemented.
+
+Do not invent test results or claim that training has succeeded if it has not been executed.
+
+---
+
+## 13. FINAL EXPECTED DELIVERABLES
+
+Deliver the following within my existing project:
+
+1. Updated Fruit Twin website.
+2. Integrated Fruits-360 fruit-identification model.
+3. Integrated RawRipe maturity-classification model.
+4. GAN training and inference integration.
+5. Room-temperature input integration.
+6. Ripening-time estimation only if validated data supports it.
+7. Updated backend API routes.
+8. Updated frontend prediction and results sections.
+9. Dataset setup instructions.
+10. Model training and evaluation scripts.
+11. Updated dependencies.
+12. Clear local execution instructions.
+13. Actual evaluation results.
+14. Documentation listing supported fruit types and supported features.
+15. A list of remaining limitations and additional data needed.
+
+## 14. FINAL DEVELOPMENT INSTRUCTION
+
+Implement this as an extension of my existing Fruit Twin application.
+
+Prioritize these milestones:
+
+Milestone 1: Multi-fruit identification using Fruits-360.
+
+Milestone 2: Raw-versus-ripe classification using RawRipe.
+
+Milestone 3: Integrate both models into the existing website.
+
+Milestone 4: Integrate and validate GAN-based target-stage generation.
+
+Milestone 5: Add temperature-based ripening-time estimation only when valid training data is available.
+
+Do not stop after producing a plan. Inspect the existing files, implement the changes, run available tests, fix integration errors, and document what works.
+
+The finished project should be a functional, honest, multi-fruit AI application with ML-based identification, maturity classification, and a genuine GAN-based fruit simulation feature.
+
+Never claim every fruit supports every feature unless the required models have been trained and evaluated for those fruits.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-23T20:29:24+05:30.
+</ADDITIONAL_METADATA>
