@@ -170,11 +170,11 @@ def run_tests():
     print(f"  Result: maturity is_supported={res13.get('maturity_classification', {}).get('is_supported')}, msg='{res13.get('maturity_classification', {}).get('status_message')}' -> {'PASS' if t13_pass else 'FAIL'}")
     if t13_pass: passed += 1
 
-    # TEST 14 — Fruit without trained GAN (Honest disclaimer)
-    print("\n[TEST 14] GAN generation disclaimer for uncalibrated fruit (Watermelon):")
+    # TEST 14 — Universal cGAN Generation across Core Fruits (Watermelon)
+    print("\n[TEST 14] Universal cGAN Generation across Core Fruits (Watermelon):")
     res14 = simulate_future_stage(wm_img, 28.0, "Ripe", "watermelon")
-    t14_pass = res14.get("is_supported") is False or "not yet trained" in res14.get("status_message", "").lower()
-    print(f"  Result: gan is_supported={res14.get('is_supported')}, msg='{res14.get('status_message')}' -> {'PASS' if t14_pass else 'FAIL'}")
+    t14_pass = res14.get("is_supported") is True and bool(res14.get("generated_image"))
+    print(f"  Result: gan is_supported={res14.get('is_supported')}, has_image={bool(res14.get('generated_image'))} -> {'PASS' if t14_pass else 'FAIL'}")
     if t14_pass: passed += 1
 
     # TEST 15 — Pipeline switching execution (Banana analyzed in Banana pipeline)

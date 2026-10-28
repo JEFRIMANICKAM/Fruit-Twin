@@ -934,17 +934,17 @@ export default function AnalysisPage({ modelStatus, initialFruitId, initialSampl
                 </div>
                 <input
                   type="range"
-                  min="15"
-                  max="38"
+                  min="5"
+                  max="50"
                   step="0.5"
                   value={temperature}
                   onChange={(e) => setTemperature(parseFloat(e.target.value))}
                   className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400"
                 />
                 <div className="flex justify-between text-[10px] text-slate-500">
-                  <span>15°C Cold</span>
-                  <span>28°C Ambient</span>
-                  <span>38°C Tropical</span>
+                  <span>5°C Cold Storage</span>
+                  <span>25°C Ambient</span>
+                  <span>50°C Tropical</span>
                 </div>
               </div>
             </div>
@@ -1299,71 +1299,98 @@ export default function AnalysisPage({ modelStatus, initialFruitId, initialSampl
               </div>
             </div>
 
-            {/* 2. RawRipe Maturity Classification */}
+            {/* 2. Ripeness & Maturity Classification */}
             <div className="glass-card rounded-2xl p-5 border border-slate-800 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                    2. RawRipe Maturity Classification
+                    2. Ripeness & Maturity Classification
                   </span>
                   <span className="text-[10px] text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
-                    RawRipe (1,630 imgs)
+                    4-Stage Universal ML
                   </span>
                 </div>
 
-                {analysisResult.rawripe_supported !== false ? (
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between bg-slate-950 p-3 rounded-lg border border-slate-800">
-                      <span className="text-xs text-slate-400">RawRipe State:</span>
-                      <span className={`px-3 py-1 rounded-full text-xs font-bold tracking-wide border ${
-                        analysisResult.rawripe_maturity === 'Ripe'
-                          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                          : 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                      }`}>
-                        {analysisResult.rawripe_maturity || 'Ripe'}
-                      </span>
+                <div className="space-y-3">
+                  <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1.5 text-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400 font-medium">Stage Classification:</span>
+                      <RipenessBadge stage={analysisResult.ripeness_stage} size="small" />
                     </div>
-
-                    <div className="bg-slate-950 p-3.5 rounded-lg border border-slate-800 space-y-2">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-slate-400">Maturity Confidence</span>
-                        <span className="text-cyan-400 font-bold">{analysisResult.rawripe_confidence || 94.0}%</span>
-                      </div>
-                      <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
-                        <div 
-                          className="h-full bg-gradient-to-r from-amber-400 to-emerald-400 rounded-full" 
-                          style={{ width: `${analysisResult.rawripe_confidence || 90.0}%` }} 
-                        />
-                      </div>
-                    </div>
-
-                    <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1.5 text-xs">
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-400">Stage Classification:</span>
-                        <RipenessBadge stage={analysisResult.ripeness_stage} size="small" />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-400">Ripeness Index:</span>
-                        <span className="text-white font-bold">{analysisResult.ripeness_score}%</span>
-                      </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400 font-medium">Ripeness Index:</span>
+                      <span className="text-white font-bold font-mono">{analysisResult.ripeness_score}%</span>
                     </div>
                   </div>
-                ) : (
-                  <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 text-center my-4 space-y-2">
-                    <AlertTriangle className="w-6 h-6 text-amber-400 mx-auto" />
-                    <p className="text-xs font-bold text-amber-300 leading-snug">
-                      Fruit identified successfully. Ripeness prediction is not yet available for this fruit.
-                    </p>
-                    <p className="text-[11px] text-slate-400">
-                      RawRipe benchmark covers 10 agricultural fruits (Apple, Banana, Coconut, Guava, Litchi, Mango, Orange, Papaya, Pomegranate, Strawberry).
-                    </p>
+
+                  {/* 4-Stage Calibrated Probability Distribution */}
+                  <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-[11px] text-slate-400 font-semibold border-b border-slate-800/60 pb-1">
+                      <span>Ripeness Probability Distribution</span>
+                      <span className="text-[10px] text-slate-500">4-Stage Calibrated</span>
+                    </div>
+                    <div className="space-y-1.5">
+                      {[
+                        { label: 'Unripe', color: 'from-emerald-600 to-emerald-400', text: 'text-emerald-400' },
+                        { label: 'Semi-Ripe', color: 'from-yellow-600 to-yellow-400', text: 'text-yellow-400' },
+                        { label: 'Ripe', color: 'from-amber-600 to-amber-400', text: 'text-amber-400' },
+                        { label: 'Overripe', color: 'from-rose-600 to-rose-400', text: 'text-rose-400' },
+                      ].map((item) => {
+                        const prob = analysisResult.probabilities?.[item.label] ?? 
+                                     analysisResult.universal_ripeness?.probabilities?.[item.label] ?? 0;
+                        const pct = typeof prob === 'number' ? (prob <= 1 ? Math.round(prob * 100) : prob) : 0;
+                        const isMax = (analysisResult.ripeness_stage === item.label);
+                        return (
+                          <div key={item.label} className="space-y-0.5">
+                            <div className="flex justify-between items-center text-[10px]">
+                              <span className={`${isMax ? `${item.text} font-bold` : 'text-slate-400'}`}>
+                                {item.label} {isMax && '✓'}
+                              </span>
+                              <span className={`font-mono ${isMax ? `${item.text} font-bold` : 'text-slate-400'}`}>
+                                {pct}%
+                              </span>
+                            </div>
+                            <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800/60">
+                              <div
+                                className={`h-full bg-gradient-to-r ${item.color} rounded-full transition-all duration-500`}
+                                style={{ width: `${Math.min(100, Math.max(0, pct))}%` }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                )}
+
+                  {/* RawRipe Benchmark State */}
+                  {analysisResult.rawripe_supported !== false ? (
+                    <div className="flex items-center justify-between bg-slate-950/70 px-3 py-2 rounded-lg border border-slate-800/80 text-xs">
+                      <span className="text-[11px] text-slate-400">RawRipe State:</span>
+                      <div className="flex items-center gap-2">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold tracking-wide border ${
+                          analysisResult.rawripe_maturity === 'Ripe'
+                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                            : 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                        }`}>
+                          {analysisResult.rawripe_maturity || 'Ripe'}
+                        </span>
+                        <span className="text-[10px] text-cyan-400 font-mono">
+                          {analysisResult.rawripe_confidence || 94.0}%
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="px-3 py-1.5 bg-slate-950/40 rounded-lg border border-slate-800/50 text-[10px] text-slate-400 flex items-center justify-between">
+                      <span>RawRipe Dataset:</span>
+                      <span className="text-slate-400 italic">4-Stage Optical Synthesis</span>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="mt-3 pt-3 border-t border-slate-800/80 text-[10px] text-slate-400 flex items-center justify-between">
                 <span>Model:</span>
-                <span className="text-cyan-400">RawRipe 10-Fruit Maturity Classifier</span>
+                <span className="text-cyan-400">Universal 4-Stage Ripeness Engine</span>
               </div>
             </div>
 

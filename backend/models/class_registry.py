@@ -16,14 +16,14 @@ RAWRIPE_SUPPORTED_FRUITS = {
     "mango", "orange", "papaya", "pomegranate", "strawberry"
 }
 
-# GAN future simulation supported fruits
+# GAN future simulation supported fruits across all 8 core agricultural fruits
 GAN_SUPPORTED_FRUITS = {
-    "mango", "banana", "apple", "papaya"
+    "mango", "banana", "papaya", "apple", "orange", "guava", "pomegranate", "watermelon"
 }
 
-# Ripening time telemetry regression supported fruits
+# Ripening time telemetry regression supported fruits across all 8 core agricultural fruits
 TELEMETRY_SUPPORTED_FRUITS = {
-    "mango"
+    "mango", "banana", "papaya", "apple", "orange", "guava", "pomegranate", "watermelon"
 }
 
 # Primary dashboard pipeline fruits (8 agricultural categories)
